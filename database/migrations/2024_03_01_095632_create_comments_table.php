@@ -9,16 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('replies', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('comment_id');
+            $table->unsignedBigInteger('blog_id');
             $table->unsignedBigInteger('user_id');
-            $table->text('content'); // Changed from 'content' to 'replytext'
+            $table->text('text'); // Changed from 'content' to 'text'
             $table->timestamps();
 
-            $table->foreign('comment_id')->references('id')->on('comments')->onDelete('cascade');
+            $table->foreign('blog_id')->references('id')->on('blogs')->onDelete('cascade');
             // Assuming you have a users table, define the foreign key relationship
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('replies');
+        Schema::dropIfExists('comments');
     }
 };
